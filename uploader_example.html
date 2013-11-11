@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+  <head>
+    <title>Uploader Library Example</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+    <!-- Include uploader_styles.css and uploader.js, the two client-side components of the Uploader library -->
+    <link rel="stylesheet" href="uploader_styles.css" />
+    <script src="uploader.js" type="text/javascript"></script>
+
+  </head>
+  <body>
+
+    <!-- Here's an example form. It houses the file input we'll be attaching our Uploader to, as well as a few other fields for options -->
+    <!-- Notice that all it does is trigger our Javascript function when it's subitted, returning false so it doesn't actually submit -->
+    <form name="uploadForm" onsubmit="DoUpload(); return false" action="javascript:return false">
+      <table>
+
+        <!-- We'll attach our uploader to this file input -->
+        <tr>
+          <td>Choose a file:</td>
+          <td><input type="file" name="upFile" /></td>
+        </tr>
+
+        <!-- The Uploader.Upload() function has an optional argument to allow overwriting of existing files (false by default). -->
+        <!-- This checkbox controls whether that option is used or not -->    
+        <tr>
+          <td>Overwrite Existing?</td>
+          <td><input type="checkbox" value="true" name="overWrite" /></td>
+        </tr>
+    
+        <!-- This lets the user change the directory that the file uploads to. -->
+        <!-- You probably won't want to use this in your final version, but it's here to show how the directory can be changed -->
+        <tr>
+          <td>Alternate upload directory:</td>
+          <td><input type="text" name="dir" value="MyUploads" /><input type="button" value="Change Directory" onclick="ChangeIt()" /></td>
+        </tr>
+     
+        <!-- Nothing special, just a submit button :) -->
+        <tr>
+          <td> </td>
+          <td><input type="submit" value="Upload!" /></td>
+        </tr>
+      </table>
+  </form>
+
+  <!-- The Uploader library includes a ProgressBar class so it can show the progress of an upload -->
+  <!-- Here we create an area on the page where the ProgressBar will be inserted, along with a spot to write percentage text -->
+  <div id="progarea"></div>
+  <div id="percentage"></div>
+
+  <!-- The main script -->
+  <script type="text/javascript">
+      // <![CDATA[
+
+      /* First, we create a ProgressBar, inserted into our progarea DIV */
+      progbar=new ProgressBar(document.getElementById("progarea"));
+
+      /* Now we create a new Uploader and link it to our file input */ 
+      uploader=new Uploader(document.uploadForm.upFile);
+
+      /* We attach our progress bar to it, then we change the upload directory */
+      uploader.attachBar(progbar);
+      uploader.setDir("MyUploads");
+    
+      /* Just a helper function to make the percentage display more nicely
+         It just rounds "n" to "p" decimal digits. */
+      function roundTo(n, p) {
+        return Math.round(n*Math.pow(10, p))/Math.pow(10, p);
+      }
+    
+      /* We attach a function to the Uploader's onload event. This will trigger when the uploader completes an upload, and
+         it grabs that file's size and final uploaded filename (including directory relative to the uploader's receiver file).
+         Then it displays this information as a link to the file.
+
+         In this case, our receiver is in the same directory as this example page, so we can link directly to the file's name. */
+      uploader.onload=function(ev) {
+        document.getElementById("percentage").innerHTML="Done!<br /><br />Download the file <a href='"+ev.name+"'>here</a>. ("+roundTo(ev.size/1024, 2)+" kB)";
+      }
+    
+      /* We attach a function to the Uploader's onprogress event. This triggers every time a chunk is uploaded. It gets the 
+         percent completion and displays it in our percentage DIV. You can also get the size of the last uploaded chunk with
+         ev.size, but we don't use that here. */
+      uploader.onprogress=function(ev) {
+        document.getElementById("percentage").innerHTML=roundTo(ev.percent*100, 1)+"%";
+      }
+
+      /* The function that initiates the upload, which is called when out uploadForm submits. It attempts to call the
+         Upload() method of our Uploader, specifying a chunk size of 1048576 bytes (1MB) and deciding to overwrite or
+         not depending on if the overWrite checkbox is checked. If it returns 1, it successfully initiated the upload.
+         Otherwise, this handles all possible error codes with appropriate messages. */
+      function DoUpload() {
+        var success=uploader.Upload(1048576, document.uploadForm.overWrite.checked);
+        if (success==-1) { alert("Please choose a file to upload first."); }
+        else if (success==0) { alert("You cannot upload multiple files at one time with a single Uploader. Create a new Uploader for each new file."); }
+        return false;
+      }
+
+      /* Just a quick function that grabs the uploadForm's "dir" field value and attempts to set the directory of the
+         Uploader. If the Uploader currently has an upload in progress, you can't change its directory (else you'd get
+         corrupted uploads and likely errors as well); in this case, it returns false, and this code handles that with
+         an appropriate message. */
+      function ChangeIt() {
+        if (document.uploadForm.dir.value=="") { document.uploadForm.dir.value="MyUploads"; }
+        if (!uploader.setDir(document.uploadForm.dir.value)) {
+          alert("Can't change directory while an upload is in progress.");
+        }
+        else {
+          alert("Changed");
+        }
+      }
+      // ]]>
+    </script>
+    <br />
+
+    <!-- Valid! -->
+    <a href="http://validator.w3.org/check?uri=referer">
+      <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" />
+    </a>
+  </body>
+</html>

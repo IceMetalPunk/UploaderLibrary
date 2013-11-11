@@ -1,0 +1,32 @@
+  /*********************************************************************************************************************/
+  /*                            UPLOADER_STYLES.CSS - THE UPLOADER LIBRARY'S STYLINGS                                  */
+  /*                                                                                                                   */
+  /* This library is 100% free to use. The only limitation is that if you sell anything that uses it, you must include */
+  /* this message with it.                                                                                             */
+  /*                                                                                                                   */
+  /* The Uploader library, both the Javascript/AJAX frontend and the PHP backend, was created by Daniel Burnett,       */
+  /* a.k.a. IceMetalPunk.                                                                                              */
+  /*                                                                                                                   */
+  /* USAGE:                                                                                                            */
+  /*                                                                                                                   */
+  /* Place this in your Website's directory. It defines the styles for the progress bars in the uploader library. Here */
+  /* you can chance the default width, height, and colors of the bars, along with whatever other styles you want. Note */
+  /* that the background (progBG) and foreground (progFG) should always be the same height for it to look right, and   */
+  /* also that the default width for .progFG MUST be 0px for it to actually work like a progress bar should.           */
+  /*                                                                                                                   */
+  /* Note that you can also leave these as-is and modify your individual bars using the ProgressBar.setSize(w, h) and  */
+  /* ProgressBar.setColors(FGcolor, BGcolor) functions.                                                                */
+  /*                                                                                                                   */
+  /*********************************************************************************************************************/
+
+.progBG {
+  width:100px;
+  height:10px;
+  border:1px solid #000000;
+  background-color:#ffffff;
+}
+.progFG {
+  height:10px;
+  width:0px;
+  background-color:#0000ff;
+}
