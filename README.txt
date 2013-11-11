@@ -8,3 +8,22 @@
 /*              http://imperfectdesigns.site11.com                   */
 /*                                                                   */
 /*********************************************************************/
+
+Javascript Classes:
+  Uploader
+    -Uploader(picker[, bar])
+    -Upload(chunksize[, overwrite?][, name])
+    -abort()
+    -getPercent()
+    -setReceiver(url)
+    -setDir(dir)
+    -onprogress
+    -onload
+
+  ProgressBar
+    -ProgressBar(parent)
+    -setSize(width, height)
+    -setColors(FGcolor, BGcolor)
+    -setAmount(amount, max)
+    -setPercent(percent)
+    -getPercent()
