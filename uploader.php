@@ -1,7 +1,7 @@
 <?php
 
   /*********************************************************************************************************************/
-  /*                            UPLOADER.PHP - THE BACKEND TO THE UPLOADER LIBRARY                                     */
+  /*                            UPLOADER.PHP -- THE BACKEND TO THE UPLOADER LIBRARY                                    */
   /*                                                                                                                   */
   /* This library is 100% free to use. The only limitation is that if you sell anything that uses it, you must include */
   /* this message with it.                                                                                             */
