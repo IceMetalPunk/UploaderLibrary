@@ -2,7 +2,9 @@
 /*                  UPLOADER LIBRARY - README                        */
 /*                                                                   */
 /* The Uploader Library was created by Daniel Burnett (IceMetalPunk) */
-/* and is free to use and modify under a Share-Alike license.        */
+/* and is free to use and modify under the GPLv3 license, with the   */
+/* stipulation that attribution be given to me upon release of copied*/
+/* or derivative code.                                               */
 /*                                                                   */
 /*********************************************************************/
 
